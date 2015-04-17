@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebGL View</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link    rel="stylesheet" type="text/css" href="css/index.css" media="all">
+  <link    rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <link    rel="stylesheet" type="text/css" href="css/datastyle.css" media="all">
+  <link    rel="stylesheet" type="text/css" href="css/handsontable.full.css" media="screen">
+  <link    rel="stylesheet" type="text/css" href="css/3rd/jquery.treeview.css" media="all">
+  <script type="text/javascript" src="./js/FileSaver.js"></script>
+  <script type="text/javascript" src="./js/3rd/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="./js/3rd/jquery.treeview.js"></script>
+  <script type="text/javascript" src="./js/3rd/handsontable.full.js"></script>
+  <script type="text/javascript" src="./js/3rd/qatrix-1.1.js"></script>
+  <script type="text/javascript" src="./js/math.js"></script>
+  <script type="text/javascript" src="./js/stlloader.js"></script>
+  <script type="text/javascript" src="./js/DataTree.js"></script>
+  <script type="text/javascript" src="./js/camera.js"></script>
+  <script type="text/javascript" src="./js/ctrl.js"></script>
+  <script type="text/javascript" src="./js/wglrender.js"></script>
+  <script type="text/javascript" src="./js/meshobj.js"></script>
+  <script type="text/javascript" src="./js/shaderobj.js"></script>
+  <script type="text/javascript" src="./js/animtab.js"></script>
+  <script type="text/javascript" src="./js/console.js"></script>
+
+  <script id="vs_mesh" type="x-shader/x-vertex">
+      precision mediump float;
+      attribute vec3   position;
+      attribute vec3   normal;
+      attribute vec4   color;
+      uniform   mat4   mvpMatrix;
+      uniform   mat4   vMatrix;
+      uniform   mat4   vpMatrix;
+      uniform   mat4   wMatrix;
+      uniform   vec4   eyeDir;
+      uniform   vec4   uColor;
+      uniform   float  Radius;
+      varying   vec4   vColor;
+      varying   vec4   cColor;
+      varying   vec4   vNormal;
+
+      void main(void)
+      {
+        vec4 pos     = vec4(0, 0, 0, 0);
+        mat4 wvM     = vMatrix * wMatrix;
+        vec3 light   = normalize(vec3(0.5, 1.0, 1.0));
+        vec3 N       = normalize((wvM * vec4(normalize(normal), 0.0)).xyz);
+        float dt     = max(0.0, dot(N, light));
+        vec3 ncol    = vec3(dt, dt, dt);
+        vec3 L       = normalize((wvM * eyeDir).xyz);
+        vec3 col     = uColor.xyz * ncol;
+        vColor       = vec4(col, uColor.a);
+        cColor       = uColor;
+        vec3 Nv      = normalize(normal);
+        vec3 p       = position + (Nv * (Radius - 1.0));
+        pos          = mvpMatrix * vec4(p, 1.0);
+        
+        vNormal.xyz  = N.xyz;
+        //vNormal.w    = pos.z / pos.w;
+
+        gl_Position  = pos;
+      }
+  </script>
+
+  <script id="fs_mesh" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4   vColor;
+      varying vec4   vNormal;
+      varying vec4   cColor;
+      void main(void)
+      {
+          gl_FragColor = vColor;
+      }
+  </script>
+
+  <script id="fs_pick" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4   vColor;
+      varying vec4   vNormal;
+      varying vec4   cColor;
+      void main(void)
+      {
+          gl_FragColor = cColor;
+      }
+  </script>
+
+  <script id="vs_line" type="x-shader/x-vertex">
+      precision mediump float;
+      attribute vec3  position;
+      attribute vec3  normal;
+      attribute vec4  color;
+      uniform   mat4  mvpMatrix;
+      uniform   mat4  vMatrix;
+      uniform   mat4  vpMatrix;
+      uniform   mat4  wMatrix;
+      uniform   vec4  eyeDir;
+      uniform   vec4  uColor;
+      varying   vec4  vColor;
+
+      void main(void)
+      {
+        vColor       = vec4(uColor) * color;
+        gl_Position  = mvpMatrix * vec4(position, 1.0);
+      }
+  </script>
+
+  <script id="fs_line" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4      vColor;
+      void main(void)
+      {
+        gl_FragColor = vColor;
+      }
+  </script>
+</head>
+
+<body>
+<div id="main">
+  <div id="pickup"></div>
+  <div id="urlinput"></div>
+  <canvas id="canvas" class="canvas"></canvas>
+	<div id="progress"></div>
+	<div id="DataInfo" class="DataInfo">
+		<span>VertexNum :</span><span id="vertexNum"></span><br />
+		<span>PolygonNum:</span><span id="polygonNum"></span>
+	</div>
+	<div id="groupTab" class="groupTab">
+		<div id="main">
+			<div id="sidetree">
+			<div id="sidetreecontrol"><a href="?#">Collapse All</a> | <a href="?#" id="expand_all">Expand All</a></div>
+			<ul id="tree"></ul>
+		</div>
+		</div>
+	</div>
+	
+	<div class="menuTab" id="menuTab">
+		<div id="property"       class="nodeProperty"></div>
+		<!--
+			<div id="ApplyProperty"  class="menuButtonClass noneselect">Apply</div>
+			<div id="DeleteProperty" class="menuButtonClass noneselect">Delete</div>
+		-->
+		<div   id="ColorPicker"></div>
+		<input id="AlphaValue"   class="menuButtonClass noneselect" type="range" value="10" min="10" max="320">
+	</div>
+
+	<div id="consoleOutput" class="consoleOutput">
+		<div id="AddMenu" class="menuTable">
+			<div class="menuItem" ><div class="menuTextClass">Rectangle Coordinate :</div></div>
+		  <div class="menuItem"><div id="AddPoint" class="menuButtonClass noneselect">Add Point</div> </div>
+		  <div class="menuItem"><div id="AddLine" class="menuButtonClass noneselect">Add Line</div></div>
+		<div class="menuItem" ><div class="menuTextClass">Spherical Coordinate :</div></div>
+		  <div class="menuItem"><div id="AddPointSphere" class="menuButtonClass noneselect">Add Point</div> </div>
+		  <div class="menuItem"><div id="AddLineSphere" class="menuButtonClass noneselect">Add Line</div></div>
+		</div>
+    <!--<div class="spacer"></div>-->
+		<div class="consoleTextBlockArea" id="consoleTextBlockArea">
+			<span id="consoleTextBlock" class="consoleTextBlock">
+				<div id="hstable" class="hstable"></div>
+			</span>
+		</div>
+	</div>
+	
+	
+	
+	<div id="OpenSwitch" class="menuButtonClass noneselect">File</div>
+	<div id="OpenWindow" class="OpenWindow" style="display:none">
+		<div id="OpenSTL" class="file menuButtonClass noneselect">Open STL<input type="file" value="Open"     id="OpenSTLFile"> </div>
+		<div id="OpenCSV" class="file menuButtonClass noneselect">Open CSV<input type="file" value="OpenText" id="OpenTextFile"></div>
+		<div id="OpenURL" class="file menuButtonClass noneselect">Open URL</div>
+	</div>
+
+	<div id="ViewTypeSwitch" class="menuButtonClass noneselect">View Mode</div>
+	<div id="ViewType" class="OpenWindow" style="display:none">
+		<div id="viewPers" class="menuButtonClass viewTypeButton noneselect">Perspective</div>
+    <div id="viewOrtho" class="menuButtonClass viewTypeButton noneselect">Ortho</div>
+	</div>
+	
+	<div id="ViewDirectionSwitch" class="menuButtonClass noneselect">View Direction</div>
+	<div id="ViewDirection" class="OpenWindow" style="display:none">
+		<div id="viewFront" class="menuButtonClass viewDirButton noneselect">Front / Z+</div>
+		<div id="viewLeft" class="menuButtonClass viewDirButton noneselect">Left / X+</div>
+		<div id="viewTop" class="menuButtonClass viewDirButton noneselect">Top / Y+</div>
+		<div id="viewBack" class="menuButtonClass viewDirButton noneselect">Back / Z-</div>
+		<div id="viewRight" class="menuButtonClass viewDirButton noneselect">Right / X-</div>
+		<div id="viewBottom" class="menuButtonClass viewDirButton noneselect">Bottom / Y-</div>
+	</div>
+
+	<div id="ExportSwitch" class="menuButtonClass noneselect">Export</div>
+	<div id="ExportWindow" class="OpenWindow" style="display:none">
+		<div id="ExportButton" class="file menuButtonClass noneselect">Scene File</div>
+	</div>
+	
+</div>
+  <script type="text/javascript" src="./js/propertylistview.js"></script>
+  <script type="text/javascript" src="./js/grouptreeview.js"></script>
+  
+  <script type="text/javascript" src="./js/scene.js"></script>
+ 
+</body>
+</html>
+
