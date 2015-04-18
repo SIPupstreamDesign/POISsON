@@ -1,3 +1,12 @@
+/*
+ * POISsON - Probe in Solution Space
+ *
+ *
+ * Copyright (c) 2015 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
+ *
+ */
+
 /*jslint devel:true */
 /*global $, $ready, $animate, io, fs, URL */
 (function () {

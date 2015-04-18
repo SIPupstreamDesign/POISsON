@@ -1,4 +1,13 @@
-﻿/*jslint devel:true*/
+﻿/*
+ * POISsON - Probe in Solution Space
+ *
+ *
+ * Copyright (c) 2015 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
+ *
+ */
+
+/*jslint devel:true*/
 /**
  * global Float32Array, ArrayBuffer, Int16Array, QtnIV, Sub, MatIV
  * @method MatIV
