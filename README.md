@@ -41,4 +41,4 @@ PrObe In SolutiON space のAcronymをとるとPOISON（毒）になってしま�
 
 
 ## How to use
-Browse index.html by web browser. We confirmed operations on Chrome, Firefox, and Safari.
+Download and unarchive zip file, and open index.html file by web browser.  We confirmed operations on Chrome, Firefox, and Safari.
