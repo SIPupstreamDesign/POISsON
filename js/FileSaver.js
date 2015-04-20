@@ -1,3 +1,12 @@
+/*
+ * POISsON - Probe in Solution Space
+ *
+ *
+ * Copyright (c) 2015 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
+ *
+ */
+
 /* FileSaver.js
  * A saveAs() FileSaver implementation.
  * 2015-03-04

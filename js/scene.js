@@ -1,3 +1,12 @@
+/*
+ * POISsON - Probe in Solution Space
+ *
+ *
+ * Copyright (c) 2015 Advanced Institute for Computational Science, RIKEN.
+ * All rights reserved.
+ *
+ */
+
 /*jslint devel:true*/
 /*global Blob saveAs Float32Array, ArrayBuffer, Int16Array, QtnIV, MatIV,
 WGLRender, Camera, ReqFile, datatree, Mul, IntersectSphere, UnProject, UnProjectWithLocal
