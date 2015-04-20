@@ -30,6 +30,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * Kenji    Ono        keno@riken.jp
 * Tomohiro Kawabnabe
 * Kentarou Oku
+* Masaki Sasaki
+* Kazuma Hatta
 
 
 ### プロダクト名
