@@ -11,27 +11,19 @@ Probe in solution space
 - データ間の関連性の強調表示
 - 形状表示（STL, obj形式）
 
+
 ## Copyright
 Copyright (c) 2015 Advanced Institute for Computational Science, RIKEN.
 All rights reserved.
 
-This software product also includes other OSS source codes of MIT license (see remarks in source code).
-BSD lisence will be applied to the our original source code.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 ## Contributor
 * Kenji    Ono        keno@riken.jp
 * Tomohiro Kawabnabe
 * Kentarou Oku
-* Masaki Sasaki
-* Kazuma Hatta
+* Masaki   Sasaki
+* Kazuma   Hatta
 
 
 ### プロダクト名
@@ -45,15 +37,25 @@ PrObe In SolutiON space のAcronymをとるとPOISON（毒）になってしま�
 ## How to use
 Download and unarchive zip file, and open index.html file by web browser.  We confirmed operations on Chrome, Firefox, and Safari.
 
-## LICENSE表記
-本プログラムは以下の3rd製ツールを利用しております。
+
+## LICENSE
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This software product includes other OSS source codes of MIT license (see remarks in source code).
+BSD lisence will be applied to the our original source code.
 
 * jquery-1.11.2        jQuery License http://jquery.com/
 * Handsontable         MIT License http://handsontable.com/
 * jQuery               MIT License http://bassistance.de/jquery-plugins/jquery-plugin-treeview/
 * Qatrix               MIT License http://qatrix.com/
 
-### jQuery License表記
+
+### jQuery License
 Copyright jQuery Foundation and other contributors, https://jquery.org/
 
 This software consists of voluntary contributions made by many
