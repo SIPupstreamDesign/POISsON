@@ -25,11 +25,11 @@
 			var tempArray = csvData.split("\n");
 			var csvArray = new Array();
 			var ii;
-			for(var i = 0; i<tempArray.length;i++){
+			for (var i = 0; i<tempArray.length;i++){
 				csvArray[i] = tempArray[i].split(",");
 				
 				//check double double 
-				for(ii = 0; ii < csvArray[i].length; ii = ii + 1) {
+				for (ii = 0; ii < csvArray[i].length; ii = ii + 1) {
 					if( csvArray[i][ii][0] === '"') {
 						csvArray[i][ii] = csvArray[i][ii].slice(1, -1);
 					}
@@ -44,7 +44,7 @@
 	 * @return Number 列数
 	 */
 	function countCols() {
-		if(grid) {
+		if (grid) {
 			return grid.countCols();
 		}
 		return 0;
@@ -57,7 +57,7 @@
 	 * @return Array 列データ
 	 */
 	function getCol(index) {
-		if(grid) {
+		if (grid) {
 			return grid.getDataAtCol(index);
 		}
 		return null;
@@ -68,11 +68,11 @@
 	 * @method resetData
 	 */
 	function resetData() {
-		if(grid) {
+		if (grid) {
 			delete grid;
 		}
 		grid = null;
-		if(tbl) {
+		if (tbl) {
 			tbl.innerHTML = '';
 		}
 	}
@@ -91,7 +91,7 @@
 			options;
 		if (select && colinfo) {
 			options = select.options;
-			for(i = 0 ; i < colinfo.length; i = i + 1) {
+			for (i = 0 ; i < colinfo.length; i = i + 1) {
 				if(colinfo[i].index === index) {
 					options[colinfo[i].attr].selected = true;
 				}
@@ -118,7 +118,7 @@
 			k          = 0,
 			style = tbl.style;
 		resetData();
-		if(grid == null) {
+		if (grid == null) {
 			grid = new Handsontable(tbl, {
 				rowHeaders   : true,
 				colHeaders   : true,
@@ -126,10 +126,10 @@
 				
 				onChange: function(change, source) {
 					console.log('チェンジされました', change, source);
-					if(grid) {
+					if (grid) {
 						grid.render();
 					}
-					if(source === 'loadData') return;
+					if (source === 'loadData') return;
 					window.scene.updateconsole(selectdata);
 				}
 			});
@@ -137,7 +137,7 @@
 		
 		selectdata = data;
 
-		if(grid) {
+		if (grid) {
 			grid.loadData(data);
 			
 			grid.updateSettings({
@@ -217,8 +217,10 @@
 	 * @param {Event} evt ファイルイベント
 	 */
 	function openText(evt) {
-		var files = evt.target.files;
-		var reader = new FileReader();
+		var files = evt.target.files,
+				reader = new FileReader(),
+				tempname;
+
 		if (evt === '') {
 			return;
 		}
@@ -232,7 +234,12 @@
 			if (files[0].hasOwnProperty("name")) {
 				filename = files[0].name;
 			}
-			reader.readAsText(files[0], "UTF-8");
+			tempname = filename.toLowerCase();
+			if (tempname.match(/txt/) || tempname.match(/csv/)) {
+				reader.readAsText(files[0], "UTF-8");
+			} else {
+				alert('CSV、もしくはCSV形式のTXT形式を指定してください');
+			}
 		}
 	}
 
