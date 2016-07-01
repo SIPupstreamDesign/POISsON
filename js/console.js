@@ -234,8 +234,7 @@
 			if (files[0].hasOwnProperty("name")) {
 				filename = files[0].name;
 			}
-			tempname = filename.toLowerCase();
-			if (tempname.match(/txt/) || tempname.match(/csv/)) {
+			if (files[0].name.match(/txt/) || files[0].name.match(/csv/)) {
 				reader.readAsText(files[0], "UTF-8");
 			} else {
 				alert('CSV、もしくはCSV形式のTXT形式を指定してください');
