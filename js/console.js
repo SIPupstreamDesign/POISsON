@@ -231,9 +231,7 @@
 			document.getElementById('OpenTextFile').value = ''; // clear filename
 		});
 		if (files[0]) {
-			if (files[0].hasOwnProperty("name")) {
-				filename = files[0].name;
-			}
+			filename = files[0].name;
 			if (files[0].name.match(/txt/) || files[0].name.match(/csv/)) {
 				reader.readAsText(files[0], "UTF-8");
 			} else {
