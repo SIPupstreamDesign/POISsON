@@ -793,8 +793,8 @@ Normalize, Sub */
 		
 		if (mesh.urllist.length > 0) {
 			info.URL = {};
-			info.URL.title = mesh.urllist[info.index / 3];
-			info.URL.href  = mesh.urllist[info.index / 3];
+			info.URL.title = mesh.urllist[info.index];
+			info.URL.href  = mesh.urllist[info.index];
 		}
 		createPopup(win_x, win_y, info);
 		showPickMesh(info.position, mesh);
