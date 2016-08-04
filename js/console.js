@@ -183,7 +183,7 @@
 			});
 			
 			tbl.style          = style;
-			tbl.style.overflow = scroll;
+			tbl.style.overflow = "scroll";
 		}
 	}
 
