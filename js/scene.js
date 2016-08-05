@@ -821,7 +821,11 @@ Normalize, Sub */
 	function KickDog() {
 		render.swapBuffer()(KickDogFrame);
 	}
-
+	
+	function isReallyNaN(x) {
+		return x !== x;    // xがNaNであればtrue, それ以外ではfalse
+	}
+	
 	/**
 	 * グループの追加
 	 * @method addGroup
@@ -914,7 +918,7 @@ Normalize, Sub */
 		}
 
 		for (j = 0; j < pos.length; j = j + 1) {
-			if (pos[j] === undefined) {
+			if (pos[j] === undefined || isReallyNaN(pos[j])) {
 				pos[j] = 0;
 			}
 		}
