@@ -8,6 +8,11 @@
 
 (function (window, document, undefined) {
 
+	var hasLocalStorage = false;
+	try {
+		hasLocalStorage = window.localStorage ? true : false;
+	} catch(e) {}
+
 var
 	version = '1.1',
 
@@ -494,7 +499,7 @@ var
 		}
 	},
 
-	$storage: window.localStorage ?
+	$storage: hasLocalStorage ?
 	{
 		set: function (name, value)
 		{
@@ -1698,7 +1703,7 @@ $ready(function ()
 		Qatrix.Qselector = $append(document.body, $new('style'));
 	}
 	// For hack storage
-	if (!window.localStorage)
+	if (!hasLocalStorage)
 	{
 		Qatrix.storage = $append(document.body, $new('link', {
 			'style': {
